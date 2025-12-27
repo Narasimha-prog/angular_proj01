@@ -1,6 +1,7 @@
 {
   "name": "angular-ex1",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -31,6 +32,10 @@
     "@angular/platform-server": "^20.3.0",
     "@angular/router": "^20.3.0",
     "@angular/ssr": "^20.3.3",
+    "@ngrx/effects": "^20.1.0",
+    "@ngrx/entity": "^20.1.0",
+    "@ngrx/store": "^20.1.0",
+    "@ngrx/store-devtools": "^20.1.0",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
