@@ -16,14 +16,16 @@ import { isPlatformBrowser } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    //for routing
     provideRouter(routes),
+    //for hydration
     provideClientHydration(withEventReplay()),
 
     // ✅ New NgRx provider-based API
     provideStore({ tasks: taskReducer }),
+    
     provideEffects(
- isPlatformBrowser(PLATFORM_ID) ? [TaskEffects] : []
+           isPlatformBrowser(PLATFORM_ID) ? [TaskEffects] : []
     ),
     ...( isDevMode() ? [
     provideStoreDevtools({
