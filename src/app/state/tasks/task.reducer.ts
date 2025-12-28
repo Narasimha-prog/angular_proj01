@@ -18,10 +18,17 @@ export const taskReducer = createReducer(
     tasks
   })),
 
-  on(addTask, (state, { task }) => ({
-    ...state,
+  on(addTask, (state, { task })  => {
+    console.log('Adding task:', task);
+  return  {  ...state,
     tasks: [...state.tasks, task]
-  })),
+  };
+  }
+
+)
+  
+  
+  ,
 
   on(toggleTask, (state, { id }) => ({
     ...state,

@@ -1,4 +1,4 @@
-import { ApplicationConfig, isDevMode, PLATFORM_ID } from '@angular/core';
+import { ApplicationConfig, Inject, inject, isDevMode, PLATFORM_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideZoneChangeDetection } from '@angular/core';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
@@ -13,6 +13,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { taskReducer } from './state/tasks/task.reducer';
 import { TaskEffects } from './state/tasks/task.effects';
 import { isPlatformBrowser } from '@angular/common';
+import { debugMetaReducer } from './state/tasks/store-localstorage.meta-reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,7 +23,9 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
 
     // ✅ New NgRx provider-based API
-    provideStore({ tasks: taskReducer }),
+    provideStore( 
+      { tasks: taskReducer }, { metaReducers: [debugMetaReducer] }
+    ),
     
     provideEffects(
            isPlatformBrowser(PLATFORM_ID) ? [TaskEffects] : []
