@@ -8,7 +8,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:angular_ex1": "node dist/angular_ex1/server/server.mjs"
+    "serve:ssr:angular_ex1": "node dist/angular_ex1/server/server.mjs",
+    "run": "npm run ng build && npm run serve:ssr:angular_ex1"
   },
   "prettier": {
     "printWidth": 100,

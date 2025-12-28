@@ -1,1 +1,17 @@
-<p>home-com works!</p>
+
+
+<h3>Task List</h3>
+
+<div class="task-list">
+  @for (task of tasks$ | async; track task.id) {
+  <app-task-card-com
+    [task]="task"
+    (toggle)="toggle(task.id)">
+  </app-task-card-com>
+} @empty {
+  <p>No tasks found...</p>
+}
+
+</div>
+
+<button (click)="addTask()">Add Task</button>
