@@ -11,14 +11,14 @@ export function debugMetaReducer(reducer: ActionReducer<any>): ActionReducer<any
     return reducer;
   }
 
-  const wrappedReducer = localStorageSync(
+  const wrappedReducer = localStorageSync( 
     { keys: ['tasks'],
       rehydrate: true ,
       storage: localStorage
     }
   )(reducer);
 
-  
+
   return (state, action) => {
     console.log('[MetaReducer] Called for action:', action.type);
     console.log('[MetaReducer] State before reducer:', state);
