@@ -11,6 +11,7 @@ import { serverEnvironment } from './environments/server_oauth';
 const browserDistFolder = join(import.meta.dirname, '../browser');
 import { Issuer, generators } from 'openid-client';
 import { InjectionToken, Provider } from '@angular/core';
+import { USER_TOKEN } from './app/model/user_model';
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
@@ -205,8 +206,7 @@ function parseIdToken(idToken: string) {
   return JSON.parse(Buffer.from(payload, 'base64').toString('utf8'));
 }
 
-//logs all incoming requests
-const USER_TOKEN = new InjectionToken('UserToken');
+
 /**
  * Handle all other requests by rendering the Angular application.
  */

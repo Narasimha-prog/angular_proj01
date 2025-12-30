@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,10 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('angular_ex1');
+
+  
+
+  
+
+   
 }
