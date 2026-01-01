@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "../tasks/task.reducer";
-import { login } from "./user.action";
+import { loadUser, loadUserFail, loadUserSuccess, login, logout } from "./user.action";
 
 
 
@@ -15,14 +15,14 @@ export const authReducer = createReducer(
     error: false
   })),
 
-  on(AuthActions.loadUser, (state) => ({
+  on(loadUser, (state) => ({
     ...state,
     loading: true,
     error: false
   })),
 
   // Successful authentication
-  on(AuthActions.loginSuccess, AuthActions.loadUserSuccess, (state, { user }) => ({
+  on(loadUserSuccess, (state, { user }) => ({
     ...state,
     user,
     loading: false,
@@ -30,7 +30,7 @@ export const authReducer = createReducer(
   })),
 
   // Failed to load session user
-  on(AuthActions.loadUserFail, (state) => ({
+  on(loadUserFail, (state) => ({
     ...state,
     loading: false,
     user: null,
@@ -38,10 +38,9 @@ export const authReducer = createReducer(
   })),
 
   // Logout action
-  on(AuthActions.logout, (state) => ({
+  on(logout, (state) => ({
     ...state,
     user: null,
     loading: false
   }))
 );
-🧠 What this reducer doe
