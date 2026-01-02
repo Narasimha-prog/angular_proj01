@@ -4,53 +4,67 @@ import { ChangeDetectorRef, Inject, Injectable, Optional, PLATFORM_ID } from '@a
 import { of } from 'rxjs';
 import { USER_TOKEN } from '../model/user_model';
 import { Store } from '@ngrx/store';
+import { loadUserFail, loadUserSuccess, logout } from '../state/user/user.action';
 
-@Injectable({
+// @Injectable({
+//   providedIn: 'root',
+// })
+// export class AuthService {
+
+
+
+//   constructor(  @Inject(PLATFORM_ID) private platformId: Object,
+//                  private http: HttpClient,
+//                  private cdr: ChangeDetectorRef,
+//                  private store: Store,
+//                 @Inject(USER_TOKEN) private ssrUser: any
+            
+//             ) {}
+            @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
 
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient,
+    private store: Store
+  ) {}
 
+  loadUser(): void {
 
-  constructor(  @Inject(PLATFORM_ID) private platformId: Object,
-                 private http: HttpClient,
-                 private cdr: ChangeDetectorRef,
-                 private store: Store,
-                @Inject(USER_TOKEN) private ssrUser: any
-            
-            ) {
-
-  }
-
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-    console.log("Fetching user info on browser...");
-      this.http.get('/api/me').subscribe(
-        {
-        next: (user: any) => {
-        console.log("User received:", user);
-        this.ssrUser = user;
-        this.cdr.detectChanges(); // ✨ Force UI update
-      },
-        error: () => this.ssrUser = null
-        }
-    );
+    if (!isPlatformBrowser(this.platformId)) {
+      console.log('SSR → Skip HTTP call');
+      return;
     }
-  }
 
- me() {
-  if (!isPlatformBrowser(this.platformId)) {
-    console.log("SSR → Skip HTTP call");
-    return of(null); 
+    // this.store.dispatch(loadUser());
+
+    this.http.get('/api/me').subscribe({
+      next: (user: any) => {
+        this.store.dispatch(
+
+          loadUserSuccess({tokenPayload: user})
+        );
+      
+      },
+      error: (err) => {
+        this.store.dispatch(loadUserFail({error: err.message || 'Failed to load user'}));
+      }
+    });
   }
-  return this.http.get('/api/me');
-}
 
   login(): void {
-    window.location.href = '/login'; // server handles OAuth redirect
+    window.location.href = '/login';
   }
 
   logout(): void {
-    window.location.href = '/logout'; // server destroys session
+    this.store.dispatch(logout());
+    window.location.href = '/logout';
   }
 }
+
+
+  
+
+  

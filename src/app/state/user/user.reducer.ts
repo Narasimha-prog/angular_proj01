@@ -1,46 +1,42 @@
 import { createReducer, on } from "@ngrx/store";
-import { initialState } from "../tasks/task.reducer";
-import { loadUser, loadUserFail, loadUserSuccess, login, logout } from "./user.action";
+
+import {  loadUserFail, loadUserSuccess, login, loginFailure, loginSuccess, logout } from "./user.action";
+import { AuthState } from "./user.model";
 
 
 
+const initialState: AuthState = {
+  tokenPayload: null,
+  status: 'idle',
+  error: null
+};
 
 export const authReducer = createReducer(
   initialState,
 
-  // Trigger loading user or login request
-  on(login, (state) => ({
+  on(login, state => ({
     ...state,
-    loading: true,
-    error: false
+    status: 'loading'
   })),
 
-  on(loadUser, (state) => ({
+  on(loginSuccess, (state, { tokenPayload }) => ({
     ...state,
-    loading: true,
-    error: false
+    tokenPayload,
+    status: 'authenticated',
+    error: null
   })),
 
-  // Successful authentication
-  on(loadUserSuccess, (state, { user }) => ({
+  on(loginFailure, (state, { error }) => ({
     ...state,
-    user,
-    loading: false,
-    error: false
+    status: 'error',
+    error
   })),
 
-  // Failed to load session user
-  on(loadUserFail, (state) => ({
+  on(loadUserSuccess, (state, { tokenPayload }) => ({
     ...state,
-    loading: false,
-    user: null,
-    error: true
+    tokenPayload,
+    status: 'authenticated'
   })),
 
-  // Logout action
-  on(logout, (state) => ({
-    ...state,
-    user: null,
-    loading: false
-  }))
+  on(logout, () => initialState)
 );

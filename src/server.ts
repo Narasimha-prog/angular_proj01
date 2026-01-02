@@ -106,6 +106,7 @@ app.use((_req, res, next) => {
 
 app.get('/login', (req, res) => {
   console.log('Initiating OAuth login');
+  
   const code_verifier = generators.codeVerifier();
   const code_challenge = generators.codeChallenge(code_verifier);
   const state = generators.state();

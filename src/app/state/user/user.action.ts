@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { User } from "../../model/user_model";
+import { AuthState, AuthTokenPayload } from "./user.model";
 
 // 🔹 Trigger OAuth redirect or begin login flow
 export const login = createAction('[Auth] Login');
@@ -7,18 +7,32 @@ export const login = createAction('[Auth] Login');
 // 🔹 When server sends authenticated user
 export const loginSuccess = createAction(
   '[Auth] Login Success',
-  props<{ user: User }>()
+  props<{ tokenPayload: AuthTokenPayload }>()
 );
 
-// 🔹 Load existing user from session (/api/me)
-export const loadUser = createAction('[Auth] Load User');
+
+export const loginFailure = createAction(
+  '[Auth] Login Failure',
+  props<{ error: string }>()
+);
+
+
+
+
+
 
 export const loadUserSuccess = createAction(
   '[Auth] Load User Success',
-  props<{ user: User }>()
+  props<{ tokenPayload: AuthTokenPayload }>()
+);
+// 🔹 Failed to load session user or DI
+
+
+export const loadUserFail = createAction(
+  '[Auth] Load User Fail',
+  props<{ error: string }>()
 );
 
-export const loadUserFail = createAction('[Auth] Load User Fail');
 
 // 🔹 Clear session (logout)
 export const logout = createAction('[Auth] Logout');

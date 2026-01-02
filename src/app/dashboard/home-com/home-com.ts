@@ -14,6 +14,8 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
   styleUrl: './home-com.scss',
 })
 export class HomeCom {
+
+  
 tasks$: Observable<Task[]>; // Observable of tasks
 
 
