@@ -14,9 +14,12 @@ import { taskReducer } from './state/tasks/task.reducer';
 import { TaskEffects } from './state/tasks/task.effects';
 import { isPlatformBrowser } from '@angular/common';
 import { debugMetaReducer } from './state/tasks/store-localstorage.meta-reducer';
+import { provideHttpClient } from '@angular/common/http';
+import { authReducer } from './state/user/user.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+     provideHttpClient(),
     //for routing
     provideRouter(routes),
     //for hydration
@@ -24,7 +27,11 @@ export const appConfig: ApplicationConfig = {
 
     // ✅ New NgRx provider-based API
     provideStore( 
-      { tasks: taskReducer }, { metaReducers: [debugMetaReducer] }
+      
+      { tasks: taskReducer ,
+        auth: authReducer
+      }, 
+      { metaReducers: [debugMetaReducer] }
     ),
     
     provideEffects(

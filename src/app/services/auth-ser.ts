@@ -6,21 +6,8 @@ import { USER_TOKEN } from '../model/user_model';
 import { Store } from '@ngrx/store';
 import { loadUserFail, loadUserSuccess, logout } from '../state/user/user.action';
 
-// @Injectable({
-//   providedIn: 'root',
-// })
-// export class AuthService {
 
-
-
-//   constructor(  @Inject(PLATFORM_ID) private platformId: Object,
-//                  private http: HttpClient,
-//                  private cdr: ChangeDetectorRef,
-//                  private store: Store,
-//                 @Inject(USER_TOKEN) private ssrUser: any
-            
-//             ) {}
-            @Injectable({
+@Injectable({
   providedIn: 'root',
 })
 export class AuthService {
@@ -42,8 +29,9 @@ export class AuthService {
 
     this.http.get('/api/me').subscribe({
       next: (user: any) => {
+        console.log('User loaded:', user);
         this.store.dispatch(
-
+        
           loadUserSuccess({tokenPayload: user})
         );
       
