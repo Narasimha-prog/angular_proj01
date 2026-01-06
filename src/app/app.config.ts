@@ -16,6 +16,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { debugMetaReducer } from './state/tasks/store-localstorage.meta-reducer';
 import { provideHttpClient } from '@angular/common/http';
 import { authReducer } from './state/user/user.reducer';
+import { authStorageMetaReducer } from './state/user/authStorageMetaReducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,7 +32,7 @@ export const appConfig: ApplicationConfig = {
       { tasks: taskReducer ,
         auth: authReducer
       }, 
-      { metaReducers: [debugMetaReducer] }
+      { metaReducers: [debugMetaReducer,authStorageMetaReducer] }
     ),
     
     provideEffects(

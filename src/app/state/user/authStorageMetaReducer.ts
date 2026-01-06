@@ -17,7 +17,8 @@ export function authStorageMetaReducer(
   const wrappedReducer = localStorageSync({
     keys: [
       {
-        auth: ['tokenPayload'] // 👈 persist ONLY user data
+        auth: ['tokenPayload'],
+        
       }
     ],
     rehydrate: true,
